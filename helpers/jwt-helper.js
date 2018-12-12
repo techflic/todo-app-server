@@ -5,9 +5,9 @@ const privateKEY    = fs.readFileSync('./secrets/private.key', 'utf8');    // us
 const publicKEY     = fs.readFileSync('./secrets/public.key', 'utf8');      // use 'utf8' to get string instead of byte array
 
 let dOptions = {
-    issuer      : 'server',                   // Issuer - Software organization who issues the token.
-    subject     : 'clientUser',               // Subject - Intended user of the token.
-    audience    : 'clientUserId',             // Audience - Basically identity of the intended recipient of the token. this should be provided by client.
+    issuer      : 'xxxxxx',                   // Issuer - Software organization who issues the token.
+    subject     : 'xxxxxxxxxx',               // Subject - Intended user of the token.
+    audience    : 'xxxxxxxxxxxx',             // Audience - Basically identity of the intended recipient of the token. this should be provided by client.
     expiresIn   : '6h',                       // ExpiresIn - Expiration time after which the token will be invalid.
     algorithm   : 'RS512'                     // Algorithm - Encryption algorithm to be used to protect the token.
 }

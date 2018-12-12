@@ -4,6 +4,8 @@ const saltRounds 			= 10;
 const JWT 		 			= require('../helpers/jwt-helper');
 const TodoUsers 			= require('../models/todoUsers');
 
+const notification			= require('../helpers/notification.service')
+
 const userController = {
 	registerUser: (request, response, next) => {
 		TodoUsers.findOne({email: request.body.email}, (err, user) => {
@@ -25,6 +27,7 @@ const userController = {
 						if(saveErr){
 							return next(saveErr)
 						}else{
+							notification.send({savedUser, notificationType: "registration successful"})
 							return response.status(200).json({
 					    		'success': true,
 					    		'message': 'user registered successfully',
@@ -115,11 +118,6 @@ const userController = {
 						'token': request.token
 		            })
 				}else{
-					// This assumes all the fields of the object is present in the body.
-				    // user.name = request.body.name
-				    // user.password = bcrypt.hashSync(request.body.password, saltRounds)
-				    // user.email = request.body.email
-
 				    // Update user with the available fields
 				    // This assumes the field name is the same in the form and the database.
 				    user.set(request.body) // Add checks for encryption in case of password update
