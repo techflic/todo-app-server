@@ -27,7 +27,21 @@ let TodoSchema = new Schema({
 	completed: {
 		type: Boolean,
 		default: false
+	},
+	createdAt: { 
+		type: Date
+	},
+	updatedAt: { 
+		type: Date
 	}
+});
+
+TodoSchema.pre("save", function(next) {
+	this.updatedAt = Date.now();
+	if ( !this.createdAt ) {
+		this.createdAt = Date.now();
+	}
+    next();
 });
 
 

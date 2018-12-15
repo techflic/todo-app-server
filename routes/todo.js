@@ -22,7 +22,7 @@ const upload = multer({
 }).single("file");
 
 router.post("/upload/:userId/:todoId", verify, upload, todoController.saveTodoFile)
-router.get("/upload/:userId/:todoId", todoController.getTodoFile)
+router.get("/upload/:userId/:todoId", verify, todoController.getTodoFile)
 
 router.get('/:userId', verify, todoController.getUserTodos);
 router.get('/:userId/:todoId', verify, todoController.getTodo);
