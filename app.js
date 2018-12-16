@@ -2,14 +2,16 @@
 /**
  * Module dependencies.
  */
-const env           = process.env.NODE_ENV || "local";
-const express       = require("express");
-const compression   = require("compression");
-const bodyParser    = require("body-parser");
-const cors          = require("cors");
-const mongoose      = require("mongoose");
+const env = process.env.NODE_ENV || "local";
+const express = require("express");
+const path = require("path")
+const compression = require("compression");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const swaggerJSDoc = require('swagger-jsdoc');
 
-const app_config    = require("./configurations/app_config");
+const app_config = require("./configurations/app_config");
 
 // ===================================================================
 
@@ -29,6 +31,29 @@ mongoose
     .catch(err => {
         console.error("Database connection error");
     });
+
+/**
+ * Swagger definition
+ */
+var swaggerDefinition = {
+    info: {
+        title: "Todo App server",
+        version: "1.0.0",
+        description: "Todo App Restful APIs"
+    },
+    host: "127.0.0.1:3001",
+    basePath: "/"
+};
+var options = {
+    swaggerDefinition,
+    apis: ["./routes/*.js"]
+};
+var swaggerSpec = swaggerJSDoc(options);
+app.use(express.static(path.join(__dirname, 'public')));
+app.get("/swagger.json", function(request, response) {
+    response.setHeader("Content-Type", "application/json");
+    response.send(swaggerSpec);
+});
 
 /**
  * Parsers.
@@ -104,3 +129,5 @@ app.listen(app_config.server.port, function(err) {
         console.log("listening on port : ", app_config.server.port);
     }
 });
+
+module.exports = app;
