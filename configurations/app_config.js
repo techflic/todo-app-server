@@ -8,7 +8,7 @@ let config = {
         port: process.env.PORT
     },
     database: {
-        connect_uri: 'mongodb://fsd-server-admin:fsdadmin1@ds151232.mlab.com:51232/my-shelf'
+        connect_uri: ''
     }
 };
 
